@@ -63,10 +63,9 @@ from nerfstudio.models.vanilla_nerf import NeRFModel, VanillaModelConfig
 from nerfstudio.pipelines.base_pipeline import VanillaPipelineConfig
 from nerfstudio.pipelines.dynamic_batch import DynamicBatchPipelineConfig
 from nerfstudio.plugins.registry import discover_methods
-from nerfstudio.data.datamanagers.gaussian_splatting_datamanager import RasterizerDataManagerConfig
-from nerfstudio.data.dataparsers.gaussian_splatting_dataparser import GaussianSplattingDataParserConfig
-from nerfstudio.models.gaussian_splatting import GaussianSplattingModelConfig
-from nerfstudio.pipelines.gaussian_pipeline import GaussianPipelineConfig
+from nerfstudio.data.datamanagers.gaussfacto_datamanager import GaussfactoDataManagerConfig
+from nerfstudio.models.gaussfacto import GaussfactoConfig
+from nerfstudio.pipelines.gaussfacto_pipeline import GaussfactoPipelineConfig
 
 method_configs: Dict[str, TrainerConfig] = {}
 descriptions = {
@@ -83,7 +82,7 @@ descriptions = {
     "generfacto": "Generative Text to NeRF model",
     "neus": "Implementation of NeuS. (slow)",
     "neus-facto": "Implementation of NeuS-Facto. (slow)",
-    "gaussian-splatting": "3D Gaussian Splatting implementation.",
+    "gaussfacto": "3D Gaussian Splatting implementation.",
 }
 
 method_configs["nerfacto"] = TrainerConfig(
@@ -580,18 +579,13 @@ method_configs["neus-facto"] = TrainerConfig(
     vis="viewer",
 )
 
-method_configs["gaussian-splatting"] = TrainerConfig(
-    method_name="gaussian-splatting",
+method_configs["gaussfacto"] = TrainerConfig(
+    method_name="gaussfacto",
     steps_per_eval_batch=500,
     steps_per_save=2000,
     max_num_iterations=30000,
     mixed_precision=True,
-    pipeline=GaussianPipelineConfig(
-        datamanager=RasterizerDataManagerConfig(
-            dataparser=GaussianSplattingDataParserConfig(),
-        ),
-        model=GaussianSplattingModelConfig(),
-    ),
+    pipeline=GaussfactoPipelineConfig(datamanager=GaussfactoDataManagerConfig(), model=GaussfactoConfig()),
     optimizers={},
     viewer=ViewerConfig(num_rays_per_chunk=1 << 15),
     vis="viewer",

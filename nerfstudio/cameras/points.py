@@ -44,11 +44,11 @@ class Points3D:
 class Gaussians3D:
     """3D Gaussian objects"""
 
-    positions: Float[Tensor, "*batch 3"]
+    xyzs: Float[Tensor, "*batch 3"]
     rgbs: Float[Tensor, "*batch 3"]
-    opacity: Float[Tensor, "*batch 1"]
-    quat: Float[Tensor, "*batch 4"] = None
-    scale: Float[Tensor, "*batch 3"] = None
+    opacities: Float[Tensor, "*batch 1"]
+    quats: Float[Tensor, "*batch 4"] = None
+    scales: Float[Tensor, "*batch 3"] = None
     scale_activation: Literal["abs", "exp"] = "exp"
     covariance2D: Float[Tensor, "*batch 2 2"] = None
 
